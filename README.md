@@ -20,7 +20,8 @@
 
 ## Partie 5 -> Swagger
 - Status : ok
-- Commentaire : "intégrer image", lien pour y accéder : [http://localhost:XXXX/swagger-ui.html](http://localhost:XXXX/swagger-ui.html)
+- Commentaire : ![image](https://github.com/Quentin-creat/java_intense/assets/66668804/2f143558-ab22-4da4-8a00-791a75619808)
+, lien pour y accéder : [http://localhost:XXXX/swagger-ui.html](http://localhost:XXXX/swagger-ui.html)
 
 ## Partie 6 -> Circuit Breaker
 - Status : NOK
@@ -28,11 +29,15 @@
 
 ## Partie 7 -> Actuator
 - Status : ok
-- Commentaire : Tout les liens sont visibles depuis le navigateur à [http://localhost:XXXX/actuator](http://localhost:XXXX/actuator) : "intégrer image"
+- Commentaire : Tout les liens sont visibles depuis le navigateur à [http://localhost:XXXX/actuator](http://localhost:XXXX/actuator) : ![image](https://github.com/Quentin-creat/java_intense/assets/66668804/289d3e89-6bed-411f-8b57-690f4bee48c2)
+
 
 ## Partie 8 -> Load Balancing
 - Status : ok
-- Commentaire : Le service Match a été lancé sur 3 ports (8081, 8095, et 8096) : "intégrer image"
+- Commentaire : Le service Match a été lancé sur 3 ports (8081, 8095, et 8096) : ![image](https://github.com/Quentin-creat/java_intense/assets/66668804/3dd8c00d-0329-4ee4-a05b-8d4ef929ffe8)
+
+- ![image](https://github.com/Quentin-creat/java_intense/assets/66668804/e39a357d-76c8-41c4-99b7-25dc0a7af5a6)
+
 
 ## Partie 9 -> Docker & Kubernetes
 - Status : NOK (no time)
