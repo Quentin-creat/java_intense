@@ -1,9 +1,6 @@
-server:
-  port: 8011
-
 eureka:
   instance:
-    leaseRenewalIntervalInSeconds: 5
+    leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
   client:
     serviceUrl:
