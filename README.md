@@ -2,7 +2,7 @@
 
 ## Partie 1 -> MicroService Equipe
 - Status : ok
-- Commentaire : Le service est lié au service Eureka-server.
+- Commentaire : Le service est lié au service Eureka-server. Chaque équipe contient un chef d'équipe qui est un player, implémenté sur la branche "try_hystrix_circuit_breaker" pour le circuit breaker (non mergé car ne marche pas :( ).
 
 ## Partie 2 -> MicroService Player
 - Status : ok
@@ -24,8 +24,8 @@
 , lien pour y accéder : [http://localhost:XXXX/swagger-ui.html](http://localhost:XXXX/swagger-ui.html)
 
 ## Partie 6 -> Circuit Breaker
-- Status : NOK
-- Commentaire : Partie passée en raison de la priorisation des autres tâches.
+- Status : NOK :(
+- Commentaire : Ne fonctionne pas, le services Team est censé faire une requête sur le service Player pour récupérer le chef d'équipe sur le GET Team, la jointure fonctionne mais le circuit breaker ne compile pas, je pense que c'est un pb de version java / dépendances.
 
 ## Partie 7 -> Actuator
 - Status : ok
