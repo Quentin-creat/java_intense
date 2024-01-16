@@ -1,12 +1,17 @@
 package com.example.teamservice.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/teams")
@@ -16,25 +21,56 @@ public class TeamController {
 
     public TeamController() {
         // Ajout de valeurs de test
-        Team team1 = new Team(1L, "Team A");
-        Team team2 = new Team(2L, "Team B");
+        Team team1 = new Team(1L, "Team A", 1);
+        Team team2 = new Team(2L, "Team B", 2);
 
         teamList.add(team1);
         teamList.add(team2);
     }
 
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    @SuppressWarnings("unused")
+    private Map<String, Object> defaultGreeting(int id) {
+        Team team = teamList.stream()
+                .filter(t -> t.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+
+        Map<String, Object> teamWithPlayer = new HashMap<>();
+        teamWithPlayer.put("team", team);
+        teamWithPlayer.put("player", "Le service Player est éteint");
+
+        return teamWithPlayer;
+    }
+
+    @HystrixCommand(fallbackMethod = "defaultGreeting")
     @GetMapping("/{id}")
     @ApiOperation(value = "Récupère les détails d'une équipe par son identifiant.")
-    public ResponseEntity<Team> getTeamById(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> getTeamById(@PathVariable Long id) {
         // Implémentation pour récupérer une équipe par son identifiant
         Team team = teamList.stream()
                 .filter(t -> t.getId().equals(id))
                 .findFirst()
                 .orElse(null);
 
-        return team != null
-                ? new ResponseEntity<>(team, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (team != null) {
+            // Appeler l'endpoint pour récupérer les détails du joueur par son identifiant
+            ResponseEntity<Map> playerResponse = restTemplate.getForEntity(
+                    "http://localhost:8080/player/"+team.getPlayerId(),
+                    Map.class,
+                    team.getPlayerId()
+            );
+
+            if (playerResponse.getStatusCode() == HttpStatus.OK) {
+                Map<String, Object> teamWithPlayer = new HashMap<>();
+                teamWithPlayer.put("team", team);
+                teamWithPlayer.put("player", playerResponse.getBody());
+                return new ResponseEntity<>(teamWithPlayer, HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
@@ -72,13 +108,16 @@ public class TeamController {
     public static class Team {
         private Long id;
         private String name;
+        //playerId = chef d'equipe
+        private int playerId;
 
         public Team() {
         }
 
-        public Team(Long id, String name) {
+        public Team(Long id, String name, int playerId) {
             this.id = id;
             this.name = name;
+            this.playerId = playerId;
         }
 
         // Getters, setters, autres méthodes nécessaires
@@ -97,6 +136,14 @@ public class TeamController {
 
         public void setName(String name) {
             this.name = name;
+        }
+
+        public int getPlayerId() {
+            return playerId;
+        }
+
+        public void setPlayerId(int playerId) {
+            this.playerId = playerId;
         }
     }
 }
