@@ -25,7 +25,7 @@
 
 ## Partie 6 -> Circuit Breaker
 - Status : NOK :(
-- Commentaire : Ne fonctionne pas, le services Team est censé faire une requête sur le service Player pour récupérer le chef d'équipe sur le GET Team, la jointure fonctionne mais le circuit breaker ne compile pas, je pense que c'est un pb de version java / dépendances.
+- Commentaire : Ne fonctionne pas, le services Team est censé faire une requête sur le service Player pour récupérer le chef d'équipe sur le GET Team, la jointure fonctionne mais le circuit breaker ne compile pas, je pense que c'est un pb de version java / dépendances. Testable sur la branche "try_hystrix_circuit_breaker"
 
 ## Partie 7 -> Actuator
 - Status : ok
